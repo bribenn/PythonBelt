@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Wish List</title>
+</head>
+<body>
+<h2>Registration</h2>
+<!-- Register -->
+	<form action="/register" method="post">
+	{% csrf_token %}
+		<label>Name:</label>
+		<input type="text" name="name">
+		<label>Username:</label>
+		<input type="text" name="username">
+		<label>Password</label>
+		<input type="password" name="password">
+		<p>*Password must be at least 8 characters</p>
+		<label>Confirm Password</label>
+		<input type="password" name="password_confirmation">
+		<label>Date Hired:</label>
+		<input type="Date" name="date_hired">
+		<input type="submit" value="Register">
+	</form>
+<!-- Registration Errors -->
+	{% if messages %}
+		{% for message in messages%}
+			{% if 'registration' in message.tags %}
+				<p>{{message}}</p>
+			{% endif %}
+		{%endfor%}
+	{% endif %}
+	<h2>Login</h2>
+<!-- Login -->
+	<form action="/login" method="post">
+	{% csrf_token %}
+		<label>Username:</label>
+		<input type="text" name="username">
+		<label>Password:</label>
+		<input type="password" name="password">
+		<input type="submit" value="Login">
+	</form>
+<!-- Login Error messages -->
+	{% if messages %}
+		{% for message in messages%}
+			{% if 'login' in message.tags %}
+				<p>{{message}}</p>
+			{% endif %}
+		{%endfor%}
+	{% endif %}
+</body>
+</html>
