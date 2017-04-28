@@ -18,7 +18,7 @@
 	  {% for wish in wishes %}
 	  	{% if wish.user == current_user %}
 		  <tr>
-		    <td><a href="/products/{{product.id}}">{{wish.products.name}}</a></td>
+		    <td><a href="/products/{{wish.products.id}}">{{wish.products.name}}</a></td>
 		    <td>{{wish.products.created_by.name}}</td>
 		    <td>{{wish.products.created_at}}</td>
 		    {% if wish.products.created_by == current_user %}
@@ -39,15 +39,13 @@
 	    <th>Date Added</th>
 	    <th>Action</th>
 	  </tr>
-	  {% for wish in wishes %}
-	  	{% if current_user != wish.user %}
+	{% for product in other_products %}
 		  <tr>
-		    <td><a href="/products/{{product.id}}">{{wish.products.name}}</a></td>
-		    <td>{{wish.products.created_by.name}}</td>
-		    <td>{{wish.products.created_at}}</td>
-		    <td><a href="/add_wish/{{wish.products.id}}">Add to my Wishlist</a></td>
+		    <td><a href="/products/{{product.id}}">{{product.name}}</a></td>
+		    <td>{{product.created_by.name}}</td>
+		    <td>{{product.created_at}}</td>
+		    <td><a href="/add_wish/{{product.id}}">Add to my Wishlist</a></td>
 		  </tr>
-		{% endif %}
 	{% endfor %}
 	</table>
 	 <a href="create">Add Item</a>

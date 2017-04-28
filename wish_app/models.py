@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 class UserManager(models.Manager):
@@ -16,10 +17,14 @@ class UserManager(models.Manager):
 		if not post_data.get('name').isalpha():
 			is_valid = False
 			errors.append('name field must be only alphabetical letters')
+		#check that date field is not empty
+		if len(post_data.get('date_hired')) == 0: 
+			is_valid = False
+			errors.append('Please enter a date')
 		#if password is greater than 8 characters, matches password confirmation
 		if len(post_data.get('password')) < 8:
 			is_valid = False
-			errors.append('password must be at least3 8 characters')
+			errors.append('password must be at least 8 characters')
 		if post_data.get('password_confirmation') != post_data.get('password'):
 			is_valid = False
 			errors.append('password and password confirmation must match')
@@ -32,7 +37,7 @@ class User(models.Model):
 	name = models.CharField(max_length = 45)
 	username = models.CharField(max_length = 45)
 	password = models.CharField(max_length = 255)
-	date_hired = models.DateField()
+	date_hired = models.DateTimeField()
 	created_at = models.DateTimeField(auto_now_add = True)
 	updated_at = models.DateTimeField(auto_now = True)
 	objects = UserManager()

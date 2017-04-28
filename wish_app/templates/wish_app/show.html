@@ -9,8 +9,8 @@
 	<a href="/logout">Logout</a>
 
 	<p>Users who added this item in their wish list:</p>
-	{% for user in users %}
-		{{wishlist.user.name}}
+	{% for wish in wishes %}
+		{{wish.user.name}}
 	{% endfor %}
 </body>
 </html>

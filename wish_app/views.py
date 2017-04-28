@@ -55,11 +55,18 @@ def logout(request):
 	return redirect('/')
 
 def dashboard(request):
-	
+	user = current_user(request)
+
+	product_ids = []
+	for wish in user.wish_items.all():
+		if wish.products.id not in product_ids:
+			product_ids.append(wish.products.id)
+
 	context = {
-		'current_user': current_user(request),
+		'current_user': user,
 		'products': Product.objects.all(),
-		'wishes': Wishlist.objects.all()
+		'wishes': Wishlist.objects.all(),
+		'other_products': Product.objects.exclude(id__in = product_ids)
 	}
 	return render(request, 'wish_app/dashboard.html', context)
 
@@ -112,10 +119,10 @@ def add_item(request):
 		return redirect('/dashboard')
 
 def show_product(request, id):
-	product = Product.objects.get(id = id) 
+ 	product =  Product.objects.get(id = id)
 	context = {
-	'product': Product.objects.get(id = id),
-	'wishlist': Wishlist.objects.filter(products = product),
+		'product': product,
+		'wishes':  product.wish_items.all()			
 	}
 
 	return render(request, 'wish_app/show.html', context)
